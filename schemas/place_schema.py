@@ -13,4 +13,4 @@ class Place(PlaceBase):
     place_id: int
 
     class Config:
-        orm_mode = True
+        from_attributes  = True

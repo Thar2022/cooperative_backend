@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
 from models.place_model import Place
-from schemas.place_schemas import PlaceCreate, PlaceUpdate
+from schemas.place_schema import PlaceCreate, PlaceUpdate
 
 class PlaceController:
 

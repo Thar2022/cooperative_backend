@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routers.equipment_router import router as equipment_router
 from routers.place_routers import router as place_router
+from routers.placeEquipment_router import router as placeEquipment_router
 from database import engine, Base
 
 # สร้างฐานข้อมูล
@@ -21,6 +22,7 @@ app.add_middleware(
 # รวม router
 app.include_router(equipment_router)
 app.include_router(place_router)
+app.include_router(placeEquipment_router)
 
 
 @app.get("/")

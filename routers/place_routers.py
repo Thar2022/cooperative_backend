@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from controllers.place_controller import PlaceController
-from schemas.place_schemas import PlaceCreate, PlaceUpdate, Place
+from schemas.place_schema import PlaceCreate, PlaceUpdate, Place
 from database import get_db
 
 router = APIRouter()
