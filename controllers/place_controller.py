@@ -13,6 +13,9 @@ class PlaceController:
     @staticmethod
     def create_place(db: Session, place: PlaceCreate):
         db_place = Place(**place.dict())
+        existing_place = db.query(Place).filter(Place.place_name == place.place_name).first()
+        if existing_place is not None :
+            raise HTTPException(status_code=404, detail="data is already")
         db.add(db_place)
         db.commit()
         db.refresh(db_place)

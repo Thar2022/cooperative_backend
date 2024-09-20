@@ -13,6 +13,9 @@ class EquipmentController:
     @staticmethod
     def create_equipment(db: Session, equipment: EquipmentCreate):
         db_equipment = Equipment(**equipment.dict())
+        existing_equipment = db.query(Equipment).filter(Equipment.equipment_name == equipment.equipment_name).first()
+        if existing_equipment is not None :
+            raise HTTPException(status_code=404, detail="data is already")
         db.add(db_equipment)
         db.commit()
         db.refresh(db_equipment)

@@ -20,9 +20,9 @@ app.add_middleware(
 )
 
 # รวม router
-app.include_router(equipment_router)
-app.include_router(place_router)
-app.include_router(placeEquipment_router)
+app.include_router(equipment_router,tags=["Equipment"])
+app.include_router(place_router,tags=["Place"])
+app.include_router(placeEquipment_router,tags=["PlaceEquipment"])
 
 
 @app.get("/")
