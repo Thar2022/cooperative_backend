@@ -1,4 +1,4 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session,joinedload
 from fastapi import HTTPException
 from models.placeEquipment_model import PlaceEquipment
 from models.equipment_model import Equipment
@@ -9,9 +9,10 @@ class PlaceEquipmentController:
 
     @staticmethod
     def getAll_placeEquipment(db: Session):
-        place_equipment = db.query(PlaceEquipment).all()
-        print(place_equipment)
-        return place_equipment
+        place_equipments = db.query(PlaceEquipment).options(
+                            joinedload(PlaceEquipment.place),
+                            joinedload(PlaceEquipment.equipment)).all()
+        return place_equipments
     
     @staticmethod
     def create_placeEquipment(db: Session, place_equipment: PlaceEquipmentCreate):

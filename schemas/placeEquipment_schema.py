@@ -1,5 +1,7 @@
 from pydantic import BaseModel
-from typing import Optional
+from schemas.place_schema import PlaceBase
+from schemas.equipment_schema import EquipmentBase
+from typing import List, Optional
 
 class PlaceEquipmentBase(BaseModel):
     place_id: int
@@ -21,3 +23,8 @@ class PlaceEquipment(PlaceEquipmentBase):
 
     class Config:
         from_attributes  = True
+
+# test #
+class PlaceEquipmentResponse(PlaceEquipment):
+    place:PlaceBase
+    equipment:EquipmentBase
