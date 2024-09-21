@@ -15,6 +15,13 @@ class PlaceEquipmentController:
         return place_equipments
     
     @staticmethod
+    def get_place_equipment_by_place_id(db: Session, place_id: int):
+        place_equipments = db.query(PlaceEquipment).filter(PlaceEquipment.place_id == place_id).options(
+                                joinedload(PlaceEquipment.equipment)).all()
+
+        return place_equipments
+
+    @staticmethod
     def create_placeEquipment(db: Session, place_equipment: PlaceEquipmentCreate):
         db_place_equipment = PlaceEquipment(**place_equipment.dict())
         existing_equipment = db.query(Equipment).filter(Equipment.equipment_id == place_equipment.equipment_id).first()
