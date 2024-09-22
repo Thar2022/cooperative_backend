@@ -4,7 +4,6 @@ from models.place_model import Place
 from schemas.place_schema import PlaceCreate, PlaceUpdate
 
 class PlaceController:
-
     @staticmethod
     def getAll_place(db: Session):
         place = db.query(Place).all()
