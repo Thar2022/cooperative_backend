@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session,joinedload
 from fastapi import HTTPException
+from sqlalchemy import select
 from models.placeEquipment_model import PlaceEquipment
 from models.equipment_model import Equipment
 from models.place_model import Place
@@ -12,14 +13,30 @@ class PlaceEquipmentController:
         place_equipments = db.query(PlaceEquipment).options(
                             joinedload(PlaceEquipment.place),
                             joinedload(PlaceEquipment.equipment)).all()
+        
+        
         return place_equipments
     
     @staticmethod
     def get_place_equipment_by_place_id(db: Session, place_id: int):
-        place_equipments = db.query(PlaceEquipment).filter(PlaceEquipment.place_id == place_id).options(
-                                joinedload(PlaceEquipment.equipment)).all()
-
-        return place_equipments
+        """ place_equipments = db.query(PlaceEquipment).filter(PlaceEquipment.place_id == place_id).options(
+                                joinedload(PlaceEquipment.equipment)).all() """
+        """ return place_equipments """
+        """ stmt = select(PlaceEquipment).join(Place).join(Equipment).where(Place.place_id == place_id)
+        results = db.execute(stmt).scalars().all()
+        print(results)
+        
+        return [{"place_id": pe.place_id, "equipment_name": pe.place_equipment_id} for pe in results] """
+        stmt = (
+        select(Place.place_name, Equipment.equipment_name)
+        .join(PlaceEquipment, Place.place_id == PlaceEquipment.place_id)
+        .join(Equipment, PlaceEquipment.equipment_id == Equipment.equipment_id)
+        .where(Place.place_id == place_id)
+        )
+        results = db.execute(stmt).all()
+        
+        return [{"place_name": place_name, "equipment_name": equipment_name} for place_name, equipment_name in results]
+        
 
     @staticmethod
     def create_placeEquipment(db: Session, place_equipment: PlaceEquipmentCreate):
